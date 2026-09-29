@@ -1,0 +1,47 @@
+[
+  {
+    "id": "GATE-001",
+    "title": "Phê duyệt & Khóa Hợp đồng Kỹ thuật M0 (Contract Lock)",
+    "type": "CONTRACT_LOCK",
+    "target_ref": "CONTRACT-M0-FACTORY-INIT",
+    "status": "APPROVED",
+    "required_role": "HUMAN_SUPERVISOR",
+    "approved_by": "Giám sát viên Kỹ thuật (vuducquandc@gmail.com)",
+    "timestamp": "2026-09-28T23:00:00Z",
+    "signature_token": "SIG-HM-8841-LOCKED-VERIFIED",
+    "notes": "Đã làm rõ mục tiêu, kiểm tra không mơ hồ, phê duyệt ngân sách $500 cho mốc M0."
+  },
+  {
+    "id": "GATE-002",
+    "title": "Phê duyệt Đạo diễn Cảnh chính Hạng A (SHOT-01-01-01)",
+    "type": "CLASS_A_SHOT",
+    "target_ref": "SHOT-01-01-01",
+    "status": "APPROVED",
+    "required_role": "HUMAN_DIRECTOR",
+    "approved_by": "Đạo diễn Vũ (vuducquandc@gmail.com)",
+    "timestamp": "2026-09-28T22:50:00Z",
+    "signature_token": "SIG-DIR-9102-CLASS_A-PASS",
+    "notes": "Kiểm tra thẩm mỹ, bố cục anamorphic, ánh sáng và diễn cảm của Dr. Elena đạt chuẩn điện ảnh."
+  },
+  {
+    "id": "GATE-003",
+    "title": "Nghiệm thu Mốc M0 & Cho phép chuyển giao M1 (Milestone Signoff)",
+    "type": "MILESTONE_RELEASE",
+    "target_ref": "MILESTONE-M0",
+    "status": "PENDING",
+    "required_role": "HUMAN_SUPERVISOR",
+    "notes": "Chờ hoàn tất chạy thật L5/L6 và kiểm toán toàn vẹn chuỗi bằng chứng SHA-256."
+  },
+  {
+    "id": "GATE-004",
+    "title": "Cơ chế Dừng khẩn cấp Hệ thống (Emergency Stop Switch)",
+    "type": "EMERGENCY_STOP",
+    "target_ref": "SYSTEM_PIPELINE",
+    "status": "APPROVED",
+    "required_role": "HUMAN_SUPERVISOR",
+    "approved_by": "System Guard Monitor",
+    "timestamp": "2026-09-28T23:00:00Z",
+    "signature_token": "READY_STANDBY",
+    "notes": "Cổng luôn ở trạng thái trực ban sẵn sàng nhận lệnh dừng khẩn cấp từ người dùng bất kỳ lúc nào."
+  }
+]

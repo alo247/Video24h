@@ -1,0 +1,52 @@
+{
+  "title": "CYBERNETIC CHRONICLES: ODYSSEY 2088",
+  "version": "1.0.0-LOCKED",
+  "is_locked": true,
+  "locked_by": "HUMAN_DIRECTOR_VU",
+  "locked_at": "2026-09-28T22:45:00Z",
+  "characters": [
+    {
+      "id": "char-elena",
+      "name": "Dr. Elena Vance",
+      "role": "Trưởng nhóm Nghiên cứu Lượng tử (Lead Scientist)",
+      "description": "Nữ tiến sĩ 34 tuổi, tóc bạch kim thắt bím gọn gàng, ánh mắt sắc sảo kiên định, thấu cảm sâu sắc.",
+      "costume": "Áo khoác công nghệ cao màu xanh cobalt đan xen sợi quang học nano, cổ áo phát quang vi mạch, găng tay xúc giác.",
+      "reference_prompts": [
+        "Cinematic portrait of Dr. Elena Vance, 34yo visionary female quantum scientist with silver braided hair, sharp piercing hazel eyes, glowing amber ocular HUD lens on left eye, wearing a sleek cobalt blue nanotech trench coat with fiber-optic lapels, subtle teal and copper studio rim lighting, 8k Arri Alexa 65 aesthetic."
+      ],
+      "facial_features": "Gò má cao, vết sẹo công nghệ nano mờ bên thái dương trái, tròng mắt trái tích hợp HUD màu hổ phách."
+    },
+    {
+      "id": "char-kaelen",
+      "name": "Kaelen-9",
+      "role": "Thực thể Trí tuệ Nhân tạo Tổng quát (Synthetic Envoy)",
+      "description": "Thực thể cơ khí sinh học dạng người thế hệ thứ 9, khuôn mặt thanh thoát tối giản, cử chỉ đĩnh đạc điềm tĩnh.",
+      "costume": "Khung vỏ carbon graphite mờ với các rãnh dẫn nơ-ron phát sáng ánh vàng kim, khoác áo choàng động năng xám khói.",
+      "reference_prompts": [
+        "Cinematic portrait of Kaelen-9, an elegant android envoy with matte graphite carbon-fiber chassis, subtle golden neural circuits glowing under translucent faceplates, calm enigmatic expression, wearing a flowing smoky gray kinetic cloak, anamorphic lens flare, photorealistic studio lighting."
+      ],
+      "facial_features": "Đường nét khuôn mặt đối xứng hoàn hảo, vân vi mạch vàng kim ẩn dưới lớp biểu bì polymer mờ."
+    }
+  ],
+  "world_setting": {
+    "era": "Kỷ nguyên Không gian 2088 — Trạm quỹ đạo Neo-Kyoto Vành đai 4",
+    "environment": "Siêu cấu trúc đa tầng quay quanh xích đạo Trái Đất, kiến trúc vi trọng lực kết hợp vườn sinh thái nhân tạo và phòng thí nghiệm phản vật chất.",
+    "atmosphere": "Mưa ion hóa phản xạ ánh sáng neon vi lượng, hơi sương hydro mát lạnh, không gian tĩnh lặng mang màu sắc triết học huyền bí.",
+    "rules": [
+      "Luật Vật lý trọng lực nhân tạo biến thiên theo nhịp đập của lò phản ứng",
+      "Tất cả công dân và AI đều gắn mã hash nhận diện lượng tử độc bản",
+      "Giao tiếp thông qua tần số sóng não đồng bộ với phụ đề thời gian thực"
+    ]
+  },
+  "visual_style": {
+    "color_palette": ["#0b132b", "#1c2541", "#3a86ff", "#ffbe0b", "#fb5607"],
+    "cinematography": "Ống kính Anamorphic 2.39:1, góc quay điện ảnh giàu chiều sâu, bố cục hoàng kim cân xứng, chuyển động dolly chậm rãi uy nghiêm.",
+    "lighting_key": "Độ tương phản cao Low-Key, ánh sáng viền Teal & Amber, phản chiếu quang sai thấu kính điện ảnh.",
+    "lens_type": "Cooke Anamorphic /i Full Frame Plus 40mm & 75mm Prime"
+  },
+  "ip_copyright_policy": {
+    "content_filter_strict": true,
+    "no_real_person_likeness": true,
+    "original_audio_only": true
+  }
+}

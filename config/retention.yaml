@@ -1,0 +1,17 @@
+# ====================================================================
+# EVIDENCE & AUDIT RETENTION POLICY
+# Rule: Hashes and metadata are PERMANENT. Hash chain never shrinks.
+# ====================================================================
+
+evidence_policy:
+  hash_chain_retention: "PERMANENT_IMMUTABLE"
+  metadata_retention: "PERMANENT_IMMUTABLE"
+  raw_artifacts_hot_days: 90
+  raw_artifacts_cold_archive_days: 365
+  compression_algorithm: "zstandard"
+  hash_algorithm: "sha256"
+
+audit_policy:
+  action_log_retention: "PERMANENT_IMMUTABLE"
+  tamper_verification_frequency_hours: 1
+  export_formats: ["jsonl", "cryptographic_proof_bundle"]

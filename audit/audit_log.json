@@ -1,0 +1,42 @@
+[
+  {
+    "event_id": "AUDIT-001",
+    "timestamp": "2026-09-28T22:30:00Z",
+    "actor": "agent-exec",
+    "action": "FACTORY_INITIALIZATION",
+    "details": "Khởi động Autonomous Software Factory + AI Film Factory v1.1-FINAL",
+    "tamper_hash": "b2f0a1c9e8d76543ab210987fcde432109876543ba210987fcde432109876543"
+  },
+  {
+    "event_id": "AUDIT-002",
+    "timestamp": "2026-09-28T22:35:00Z",
+    "actor": "HUMAN_SUPERVISOR",
+    "action": "CONTRACT_LOCK_COMMITTED",
+    "details": "Khóa hợp đồng CONTRACT-M0-FACTORY-INIT, ngân sách $500.00, xác nhận 5 tiêu chí PASS",
+    "tamper_hash": "c3e1b2d0f9e87654ba321098edef543210987654cb321098edef543210987654"
+  },
+  {
+    "event_id": "AUDIT-003",
+    "timestamp": "2026-09-28T22:40:00Z",
+    "actor": "agent-arch",
+    "action": "CONFIG_POLICY_LOADED",
+    "details": "Nạp các tệp /config/ (gates.yaml, film_qc.yaml, budget.yaml, retention.yaml)",
+    "tamper_hash": "d4f2c3e1a0f98765cb432109fefe654321098765dc432109fefe654321098765"
+  },
+  {
+    "event_id": "AUDIT-004",
+    "timestamp": "2026-09-28T22:45:00Z",
+    "actor": "agent-eng",
+    "action": "GUARDS_INSTANTIATED",
+    "details": "Kích hoạt Deadlock Detector, Stalled Recovery, Circuit Breaker, Budget Guard",
+    "tamper_hash": "e5a3d4f2b1a09876dc5432100f0f765432109876ed5432100f0f765432109876"
+  },
+  {
+    "event_id": "AUDIT-005",
+    "timestamp": "2026-09-28T22:50:00Z",
+    "actor": "HUMAN_DIRECTOR",
+    "action": "CLASS_A_SHOT_APPROVAL",
+    "details": "Phê duyệt SHOT-01-01-01 sau khi thẩm định bố cục điện ảnh và QC kỹ thuật",
+    "tamper_hash": "f6b4e5a3c2b10987ed6543211a1a876543210987fe6543211a1a876543210987"
+  }
+]

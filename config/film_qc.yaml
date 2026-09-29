@@ -1,0 +1,82 @@
+# ====================================================================
+# AI FILM FACTORY — QC & ACCEPTANCE METRICS CONFIGURATION
+# Rule: Thresholds calibrated at M0. Changes require Human written approval.
+# ====================================================================
+
+version: "1.1-FINAL"
+milestone_active: "M0"
+calibration_status: "CALIBRATED_M0"
+
+tiers:
+  class_a:
+    name: "Cảnh chính (Key Story Beats)"
+    review_policy: "HUMAN_MANDATORY_EACH"
+    description: "Con người bắt buộc duyệt từng cảnh riêng lẻ trước khi vào render master"
+  class_b:
+    name: "Cảnh phụ (Secondary Context)"
+    review_policy: "RANDOM_SAMPLE_MIN_20_PERCENT"
+    description: "Con người duyệt mẫu ngẫu nhiên tối thiểu 20% tổng số cảnh"
+  class_c:
+    name: "Nền & Chuyển tiếp (Background / Transitions)"
+    review_policy: "AUTOMATED_QC_SUFFICIENT"
+    description: "Kiểm tra tự động vượt ngưỡng là đủ điều kiện đóng gói"
+
+automated_qc:
+  technical:
+    min_resolution_width: 1920
+    min_resolution_height: 1080
+    allowed_fps: [24, 25, 30, 60]
+    required_codec: ["prores_422", "h265_hevc", "h264_high"]
+    min_audio_sample_rate_hz: 48000
+    min_audio_bitrate_kbps: 320
+    max_black_frames_consecutive: 2
+    max_freeze_frames_consecutive: 3
+    duration_tolerance_seconds: 0.25
+
+  character_consistency:
+    embedding_model: "gemini-embedding-2-preview"
+    embedding_dimension: 768
+    min_cosine_similarity: 0.88
+    benchmark_dataset: "film_bible_v1_curated_faces"
+
+  dialogue_fidelity:
+    stt_model: "gemini-3.5-transcribe"
+    max_wer_percent: 5.0 # Word Error Rate <= 5%
+    phoneme_matching_threshold: 0.92
+
+  subtitle_synchronization:
+    max_sync_offset_ms: 200 # Khớp thời gian trong khoảng +/- 200ms
+    min_reading_speed_cps: 12 # Characters per second
+    max_reading_speed_cps: 21
+
+human_evaluation_criteria:
+  - id: "aesthetic_composition"
+    label: "Tính thẩm mỹ & Bố cục điện ảnh"
+    evaluator: "HUMAN_DIRECTOR"
+  - id: "emotional_resonance"
+    label: "Cảm xúc & Diễn xuất nhân vật"
+    evaluator: "HUMAN_DIRECTOR"
+  - id: "rhythm_and_pacing"
+    label: "Nhịp phim & Dòng chảy thời gian"
+    evaluator: "HUMAN_EDITOR"
+  - id: "creative_intent_fidelity"
+    label: "Đúng tinh thần Film Bible"
+    evaluator: "HUMAN_PRODUCER"
+
+milestones:
+  M0:
+    name: "Khởi động hạ tầng & Hiệu chỉnh ngưỡng QC"
+    target_duration_minutes: 0
+    early_stop_condition: "Code guards không chạy được hoặc lỗi deadlock"
+  M1:
+    name: "Phim 2 phút — Chạy thật + Bằng chứng"
+    target_duration_minutes: 2
+    early_stop_condition: "Chi phí vượt 120% dự tính HOẶC tỷ lệ làm lại > 40%"
+  M2:
+    name: "Phim 10 phút"
+    target_duration_minutes: 10
+    early_stop_condition: "M1 chưa PASS hoặc chi phí đơn vị chưa đo lường được"
+  M3:
+    name: "Phim 30 phút"
+    target_duration_minutes: 30
+    early_stop_condition: "M2 chưa PASS hoặc ngân sách bổ sung chưa phê duyệt"

@@ -1,0 +1,136 @@
+{
+  "film_id": "FILM-CYBER-2088",
+  "title": "CYBERNETIC CHRONICLES: ODYSSEY 2088",
+  "logline": "Khi buồng cộng hưởng lượng tử trên quỹ đạo thức tỉnh, Tiến sĩ Elena và thực thể Kaelen-9 phải đối mặt với lựa chọn tiến hóa vượt ra ngoài ranh giới hữu hạn của nhân loại.",
+  "milestone": "M0",
+  "total_planned_shots": 3,
+  "acts": [
+    {
+      "id": "ACT-01",
+      "act_number": 1,
+      "title": "Hồi I: Điểm Kỳ Dị Thức Giấc (The Singularity Breach)",
+      "sequences": [
+        {
+          "id": "SEQ-01",
+          "title": "Trình tự 1: Vành Đai Phòng Thí Nghiệm Quỹ Đạo",
+          "scenes": [
+            {
+              "id": "SCENE-01",
+              "scene_number": 1,
+              "title": "Cảnh 1: Buồng Lượng Tử Trung Tâm",
+              "setting": "Neo-Kyoto Orbital Lab Core — Low-gravity vacuum chamber with pulsating cobalt plasma reactor",
+              "shots": [
+                {
+                  "id": "SHOT-01-01-01",
+                  "scene_id": "SCENE-01",
+                  "shot_number": 1,
+                  "name": "Elena đối mặt Lò phản ứng Lượng tử",
+                  "description": "Cận cảnh Dr. Elena nhìn vào lõi phản vật chất phát sáng, phản chiếu HUD màu hổ phách trong mắt cô.",
+                  "tier": "CLASS_A",
+                  "status": "APPROVED",
+                  "prompt": "Cinematic close-up of Dr. Elena Vance staring into a glowing cobalt quantum reactor, volumetric teal rim light, amber reflection in her cybernetic HUD lens, slow push-in camera, 4K ProRes 422.",
+                  "model_version": "veo-3.1-generate-preview",
+                  "seed": 92841,
+                  "parameters": {
+                    "aspect_ratio": "16:9",
+                    "fps": 24,
+                    "duration_seconds": 4.5,
+                    "codec": "prores_422",
+                    "resolution": "3840x2160"
+                  },
+                  "reference_images": ["film/references/elena_reference_face.png"],
+                  "output_hash": "a4f891b2c7e30d9481fe59a2c31048b291d90f23bca01e892cfae8913b8214fa",
+                  "previous_approved_hash": "a4f891b2c7e30d9481fe59a2c31048b291d90f23bca01e892cfae8913b8214fa",
+                  "qc_results": {
+                    "technical_pass": true,
+                    "character_cosine_similarity": 0.93,
+                    "dialogue_wer_percent": 1.8,
+                    "subtitle_offset_ms": 45,
+                    "black_freeze_frames_detected": 0,
+                    "overall_auto_qc_pass": true
+                  },
+                  "human_signoff": {
+                    "approved": true,
+                    "director": "HUMAN_DIRECTOR_VU",
+                    "timestamp": "2026-09-28T22:50:00Z",
+                    "aesthetic_rating": 5,
+                    "emotional_resonance": "Độ sâu biểu cảm tuyệt vời, bố cục ánh sáng và quang sai ống kính anamorphic rất đạt.",
+                    "notes": "Phê duyệt đưa vào Master Cut M0."
+                  }
+                },
+                {
+                  "id": "SHOT-01-01-02",
+                  "scene_id": "SCENE-01",
+                  "shot_number": 2,
+                  "name": "Kaelen-9 bước vào vùng vi trọng lực",
+                  "description": "Góc trung cảnh Kaelen-9 lướt nhẹ dọc sàn kính phản chiếu, các rãnh nơ-ron phát quang vàng đồng bộ theo nhịp năng lượng.",
+                  "tier": "CLASS_B",
+                  "status": "APPROVED",
+                  "prompt": "Medium cinematic shot of android Kaelen-9 floating gently across a polished reflective glass floor, gold glowing circuits pulsing along matte carbon chassis, atmospheric haze, wide anamorphic angle.",
+                  "model_version": "veo-3.1-generate-preview",
+                  "seed": 48219,
+                  "parameters": {
+                    "aspect_ratio": "16:9",
+                    "fps": 24,
+                    "duration_seconds": 5.0,
+                    "codec": "prores_422",
+                    "resolution": "3840x2160"
+                  },
+                  "reference_images": ["film/references/kaelen_reference_face.png"],
+                  "output_hash": "d13e9a4f78b90123fe45ac6781290bd847291aebcd094821faec781039482103",
+                  "previous_approved_hash": "d13e9a4f78b90123fe45ac6781290bd847291aebcd094821faec781039482103",
+                  "qc_results": {
+                    "technical_pass": true,
+                    "character_cosine_similarity": 0.91,
+                    "dialogue_wer_percent": 0.0,
+                    "subtitle_offset_ms": 0,
+                    "black_freeze_frames_detected": 0,
+                    "overall_auto_qc_pass": true
+                  },
+                  "human_signoff": {
+                    "approved": true,
+                    "director": "HUMAN_DIRECTOR_VU",
+                    "timestamp": "2026-09-28T22:52:00Z",
+                    "aesthetic_rating": 4,
+                    "emotional_resonance": "Chuyển động mượt mà, phù hợp tỷ lệ duyệt ngẫu nhiên >= 20% của Hạng B.",
+                    "notes": "Đạt chuẩn kiểm định ngẫu nhiên."
+                  }
+                },
+                {
+                  "id": "SHOT-01-01-03",
+                  "scene_id": "SCENE-01",
+                  "shot_number": 3,
+                  "name": "Toàn cảnh Cổng lượng tử Neo-Kyoto ngoài không gian",
+                  "description": "Đại cảnh toàn cảnh trạm quỹ đạo quay chậm giữa tinh vân và vành đai ánh sáng Trái Đất bên dưới.",
+                  "tier": "CLASS_C",
+                  "status": "APPROVED",
+                  "prompt": "Extreme wide establishing shot of Neo-Kyoto orbital megastructure orbiting above curved blue horizon of Earth, neon city lights below, starry deep space background, cinematic lens flare.",
+                  "model_version": "veo-3.1-lite-generate-preview",
+                  "seed": 10928,
+                  "parameters": {
+                    "aspect_ratio": "16:9",
+                    "fps": 24,
+                    "duration_seconds": 6.0,
+                    "codec": "h264_high",
+                    "resolution": "1920x1080"
+                  },
+                  "reference_images": [],
+                  "output_hash": "78fa12bc904321ef894721ab982104dc192048fe781203498127394812039842",
+                  "previous_approved_hash": "78fa12bc904321ef894721ab982104dc192048fe781203498127394812039842",
+                  "qc_results": {
+                    "technical_pass": true,
+                    "character_cosine_similarity": 1.0,
+                    "dialogue_wer_percent": 0.0,
+                    "subtitle_offset_ms": 0,
+                    "black_freeze_frames_detected": 0,
+                    "overall_auto_qc_pass": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

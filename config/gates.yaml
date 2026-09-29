@@ -1,0 +1,62 @@
+# ====================================================================
+# AUTONOMOUS SOFTWARE FACTORY — QUALITY & RELEASE GATES CONFIGURATION
+# Rule: Any change to limits/thresholds MUST be approved by Human.
+# ====================================================================
+
+version: "1.1-FINAL"
+last_human_approval: "2026-09-28T23:00:00Z"
+approved_by: "HUMAN_SUPERVISOR_01"
+
+gates:
+  quality_gate:
+    required_layers:
+      - L1 # Static analysis, lint, type-check
+      - L2 # Unit tests (mock permitted)
+      - L3 # Integration tests (mock permitted)
+      - L4 # E2E tests on staging (explicit limitations)
+    max_critical_defects: 0
+    max_high_defects: 0
+    min_test_coverage_percent: 85.0
+    max_regression_rate_percent: 0.0
+    adversarial_check_required: true
+
+  release_gate:
+    required_layers:
+      - L5 # Real run in production-like environment (mock STRICTLY FORBIDDEN)
+      - L6 # Tangible acceptance & concrete output inspection
+    rollback_plan_tested: true
+    evidence_chain_verified: true
+    human_signoff_required: true
+    canary_strategy:
+      initial_percentage: 5
+      bake_time_minutes: 60
+      auto_rollback_on_error_rate: 0.01
+
+layers_specification:
+  L1:
+    name: "Phân tích tĩnh & Kiểu dữ liệu"
+    tools: ["tsc", "eslint", "ast-guard"]
+    mock_allowed: false
+  L2:
+    name: "Unit Tests"
+    tools: ["vitest", "jest"]
+    mock_allowed: true
+  L3:
+    name: "Kiểm thử tích hợp"
+    tools: ["testcontainers", "supertest"]
+    mock_allowed: true
+  L4:
+    name: "E2E Staging"
+    tools: ["playwright", "cypress"]
+    mock_allowed: false
+    notes: "Ghi rõ ràng các giới hạn sandbox"
+  L5:
+    name: "Chạy thật Production-like"
+    tools: ["real_runtime", "real_sandbox", "k6_load"]
+    mock_allowed: false
+    notes: "BẮT BUỘC dịch vụ/dữ liệu thật hoặc sandbox thật kèm tải cơ bản"
+  L6:
+    name: "Nghiệm thu Sản phẩm"
+    tools: ["acceptance_runner", "evidence_collector"]
+    mock_allowed: false
+    notes: "Thao tác thật, đầu ra cụ thể, đối chiếu tiêu chí PASS của Contract"

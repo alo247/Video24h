@@ -1,0 +1,69 @@
+{
+  "contract_id": "CONTRACT-M0-FACTORY-INIT",
+  "version": "1.1.0",
+  "title": "Hạ tầng Nhà máy Tự trị M0 — Autonomous Software Factory + AI Film Factory",
+  "status": "LOCKED",
+  "created_at": "2026-09-28T22:30:00Z",
+  "locked_at": "2026-09-28T23:00:00Z",
+  "human_signer": {
+    "name": "Giám sát viên Kỹ thuật (Human Supervisor)",
+    "email": "vuducquandc@gmail.com",
+    "signature_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "approved_status": "APPROVED"
+  },
+  "objective": "Xây dựng và vận hành cấu trúc hạ tầng cốt lõi M0, kích hoạt 5 cơ chế Guard bằng mã nguồn, thiết lập Evidence Store chuỗi hash bất biến, cấu hình 9 Agents với quy tắc tách quyền nghiêm ngặt, sẵn sàng tiếp nhận kiểm thử phần mềm qua 6 tầng (L1-L6) và kiểm định phim điện ảnh 5 cấp bậc.",
+  "scope": [
+    "Cấu trúc thư mục chuẩn hóa: /config, /agents, /contracts, /tasks, /evidence, /film, /output, /audit, /human",
+    "Hệ thống Guard thực thi bằng code: Deadlock Detector, Stalled Recovery, Circuit Breaker, Budget Guard, Evidence Guard",
+    "Cơ chế chuỗi băm Append-Only SHA-256 bảo vệ toàn vẹn bằng chứng",
+    "Mô hình Film Bible và hệ thống kiểm soát chất lượng phim AI 5 cấp (Film -> Act -> Sequence -> Scene -> Shot)",
+    "Bộ tiêu chuẩn kiểm thử phần mềm 6 lớp L1 đến L6 và quy trình Adversarial Agent tối đa 2 vòng"
+  ],
+  "measurable_pass_criteria": [
+    {
+      "id": "PASS-M0-01",
+      "metric": "Toàn vẹn cấu trúc thư mục & file cấu hình",
+      "threshold": "100% các file config, contracts, tasks, evidence, film, audit, human tồn tại và hợp lệ",
+      "layer": "L1",
+      "status": "VERIFIED_PASS"
+    },
+    {
+      "id": "PASS-M0-02",
+      "metric": "Thực thi 5 Code Guards",
+      "threshold": "Deadlock cycle detection = 0 cycles, Budget Guard phản hồi cảnh báo 70%/90%/100%, Circuit Breaker ngắt khi provider lỗi >= 3 lần",
+      "layer": "L2",
+      "status": "VERIFIED_PASS"
+    },
+    {
+      "id": "PASS-M0-03",
+      "metric": "Tính toàn vẹn của chuỗi băm Evidence Store",
+      "threshold": "Chuỗi SHA-256 Append-only không thể bị can thiệp, Verifier != Worker được kiểm tra bắt buộc",
+      "layer": "L3",
+      "status": "VERIFIED_PASS"
+    },
+    {
+      "id": "PASS-M0-04",
+      "metric": "Hiệu chuẩn ngưỡng kiểm định chất lượng phim (Film QC)",
+      "threshold": "Ngưỡng kỹ thuật (Resolution >= 1080p, FPS, Codec), Character Cosine >= 0.88, Dialogue WER <= 5%, Subtitle sync <= 200ms được lưu vào /config/film_qc.yaml",
+      "layer": "L4",
+      "status": "VERIFIED_PASS"
+    },
+    {
+      "id": "PASS-M0-05",
+      "metric": "Chạy thử nghiệm môi trường thật không Mock (L5/L6 Verification)",
+      "threshold": "Tạo artifact chạy thật, tính toán hash thực tế, nghiệm thu với chữ ký kiểm tra của Verifier Agent",
+      "layer": "L5_L6",
+      "status": "READY_FOR_VERIFICATION"
+    }
+  ],
+  "allocated_budget_usd": 500.00,
+  "max_cost_limit_usd": 550.00,
+  "deadline": "2026-10-05T00:00:00Z",
+  "boundaries": {
+    "mock_forbidden_layers": ["L5", "L6"],
+    "max_active_agents": 8,
+    "max_subagent_depth": 3,
+    "max_adversarial_rounds": 2,
+    "max_fix_retries_per_task": 3
+  }
+}

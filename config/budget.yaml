@@ -1,0 +1,28 @@
+# ====================================================================
+# CONTROL PLANE — BUDGET GUARD & CONCURRENCY LIMITS
+# Rule: Threshold changes require Human authorization.
+# ====================================================================
+
+currency: "USD"
+total_allocated_budget: 2500.00
+current_spent: 312.45
+
+thresholds:
+  warning_percent: 70.0 # Cảnh báo khi chạm 70% ($1750.00)
+  soft_stop_percent: 90.0 # Dừng mềm: Đóng việc giao task mới ($2250.00)
+  hard_stop_percent: 100.0 # Dừng cứng: Hủy bỏ ngay lập tức ($2500.00)
+
+concurrency_limits:
+  max_depth: 3
+  max_child: 4
+  max_active_agents: 8 # Nâng lên 16 CHỈ khi có orchestrator thật + người duyệt
+
+sub_agent_policy:
+  inherit_budget_pool: true
+  allow_budget_overdraw: false
+
+provider_rates:
+  gemini_flash_per_1m_tokens: 0.15
+  gemini_pro_per_1m_tokens: 1.25
+  veo_video_render_per_shot: 0.85
+  cloud_sandbox_per_minute: 0.04

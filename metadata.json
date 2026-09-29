@@ -1,0 +1,8 @@
+{
+  "name": "Remix Autonomous Software Factory + AI Film Factory",
+  "description": "Autonomous production platform v1.1-FINAL featuring L1-L6 evidence verification, cryptographic hash chain, guard circuits, 5-level film hierarchy, and human approval gates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
