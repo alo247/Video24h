@@ -718,6 +718,7 @@ export default function App() {
             hierarchy={hierarchy}
             onUpdateShot={handleUpdateShot}
             onOpenReportModal={() => setIsReportModalOpen(true)}
+            onAppendBlock={handleAppendBlock}
           />
         )}
 

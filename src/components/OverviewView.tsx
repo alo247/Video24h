@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   ShieldCheck, AlertTriangle, Cpu, CheckCircle2, Play, 
   RotateCcw, Lock, DollarSign, Activity, FileCheck, RefreshCw,
-  Terminal, ShieldAlert
+  Terminal, ShieldAlert, Film, Sparkles
 } from 'lucide-react';
 import { DeadlockDetector, StalledRecoveryEngine, CircuitBreaker, BudgetGuard } from '../lib/guards';
 import { verifyEvidenceChain } from '../lib/evidenceGuard';
@@ -77,6 +77,15 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </div>
 
           <div className="flex flex-wrap lg:flex-nowrap items-center gap-3 w-full lg:w-auto">
+            <button
+              onClick={() => onNavigateToTab('film')}
+              className="flex-1 lg:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 text-xs font-extrabold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 rounded-lg shadow-lg shadow-amber-500/25 transition-all whitespace-nowrap animate-pulse"
+              title="Chuyển đến Studio Tạo Video AI"
+            >
+              <Film className="w-4 h-4 fill-slate-950" />
+              <span>🎬 TẠO VIDEO AI (STUDIO)</span>
+            </button>
+
             <button
               onClick={onRunM0Suite}
               disabled={isRunningSuite}
