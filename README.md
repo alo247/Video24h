@@ -1,19 +1,9 @@
 # Autonomous Software Factory + AI Film Factory — v1.1-FINAL
 
+[![CI / Build & Test](https://github.com/alo247/Video24h/actions/workflows/ci.yml/badge.svg)](https://github.com/alo247/Video24h/actions/workflows/ci.yml)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Falo247%2FVideo24h&env=GEMINI_API_KEY&envDescription=Google%20Gemini%20API%20Key%20for%20AI%20Orchestrator)
 
 > **Mục tiêu**: Từ yêu cầu &rarr; sản phẩm chạy thật kèm bằng chứng số bất biến — không phải chatbot chỉ biết viết code.
-
----
-
-## 🏛️ Sáu Nguyên Tắc Bất Biến
-
-1. **Không có tuyên bố — chỉ có bằng chứng.**
-2. **Không bằng chứng = Không PASS.**
-3. **Không chạy thật = Không nghiệm thu.**
-4. **Agent không tự chứng nhận công việc của mình (Verifier &ne; Worker).**
-5. **Mock &ne; Production; Build thành công &ne; Sẵn sàng phát hành.**
-6. **Mock chỉ hợp lệ L1–L3. L5+ BẮT BUỘC dịch vụ/dữ liệu thật hoặc sandbox thật.**
 
 ---
 
@@ -21,20 +11,36 @@
 
 Dự án đã được cấu hình tối ưu 100% cho nền tảng **Vercel** thông qua `vercel.json` và Serverless Functions tại `/api`:
 
-### Cách 1: 1-Click Deploy
-Nhấn nút **Deploy with Vercel** ở đầu trang hoặc truy cập:
+### Cách 1: 1-Click Deploy Trực Tiếp
+Nhấn nút **Deploy with Vercel** ở trên hoặc truy cập liên kết:
 ```
 https://vercel.com/new/clone?repository-url=https://github.com/alo247/Video24h
 ```
 
-### Cách 2: Vercel CLI
-```bash
-npm install -g vercel
-vercel
-```
+### Cách 2: Kết Nối Trực Tiếp GitHub Repository với Vercel
+1. Truy cập [Vercel Dashboard](https://vercel.com/new).
+2. Chọn kho lưu trữ: **`alo247/Video24h`**.
+3. Framework Preset: **Vite** (hệ thống tự động nhận diện từ `vercel.json`).
+4. Build Command: `npm run build`.
+5. Output Directory: `dist`.
+6. Thêm biến môi trường:
+   - `GEMINI_API_KEY`: Khóa API Google Gemini của bạn.
+7. Nhấn **Deploy**. Mỗi lần bạn push code lên nhánh `main`, Vercel sẽ tự động build và deploy trong vài giây!
 
-### Biến môi trường trên Vercel:
-- `GEMINI_API_KEY`: API Key của Google Gemini (sử dụng cho mô hình Gemini 3.8 Flash điều phối tự trị).
+---
+
+## 📤 Đẩy Mã Nguồn Lên GitHub (alo247/Video24h)
+
+Để đẩy phiên bản mới nhất lên kho `https://github.com/alo247/Video24h.git`:
+
+```bash
+# Cách 1: Chạy script tự động với Personal Access Token (PAT)
+bash scripts/push_to_github.sh <YOUR_GITHUB_TOKEN>
+
+# Cách 2: Thiết lập biến môi trường và chạy qua npm
+export GITHUB_TOKEN="ghp_your_github_personal_access_token"
+npm run push
+```
 
 ---
 

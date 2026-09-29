@@ -1,5 +1,4 @@
 import express from 'express';
-import { createServer as createViteServer } from 'vite';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,6 +14,9 @@ const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 app.use(express.json());
+
+// In-memory cache for serverless environments (e.g. Vercel read-only filesystem)
+const inMemoryStore: Record<string, any> = {};
 
 // Initialize Gemini Client with aistudio-build telemetry
 let aiClient: GoogleGenAI | null = null;
@@ -33,23 +35,46 @@ if (process.env.GEMINI_API_KEY) {
   }
 }
 
-// Helper to read JSON or YAML safely
+// Helper to read JSON or YAML safely with in-memory fallback
 function readConfigFile(filename: string) {
-  const filePath = path.resolve(process.cwd(), filename);
-  if (!fs.existsSync(filePath)) return null;
-  const content = fs.readFileSync(filePath, 'utf-8');
-  if (filename.endsWith('.yaml') || filename.endsWith('.yml')) {
-    return yaml.parse(content);
+  if (inMemoryStore[filename]) {
+    return inMemoryStore[filename];
   }
-  return JSON.parse(content);
+  try {
+    const filePath = path.resolve(process.cwd(), filename);
+    if (!fs.existsSync(filePath)) return null;
+    const content = fs.readFileSync(filePath, 'utf-8');
+    let parsed: any;
+    if (filename.endsWith('.yaml') || filename.endsWith('.yml')) {
+      parsed = yaml.parse(content);
+    } else {
+      parsed = JSON.parse(content);
+    }
+    inMemoryStore[filename] = parsed;
+    return parsed;
+  } catch (e) {
+    return inMemoryStore[filename] || null;
+  }
+}
+
+function writeConfigFile(filename: string, content: any, isRaw = false) {
+  inMemoryStore[filename] = isRaw ? (filename.endsWith('.yaml') ? yaml.parse(content) : JSON.parse(content)) : content;
+  try {
+    const filePath = path.resolve(process.cwd(), filename);
+    fs.writeFileSync(filePath, isRaw ? content : JSON.stringify(content, null, 2), 'utf-8');
+  } catch (err) {
+    // Vercel serverless / read-only filesystem: continue with in-memory state
+    console.warn(`Filesystem write skipped (using in-memory fallback for ${filename})`);
+  }
 }
 
 // ----------------------------------------------------
-// API ROUTES
+// API ROUTER (Mounts to both /api and / for Vercel & Express)
 // ----------------------------------------------------
+const apiRouter = express.Router();
 
 // 1. Overall System Status
-app.get('/api/status', (req, res) => {
+apiRouter.get('/status', (req, res) => {
   try {
     const contract = readConfigFile('contracts/active_contract.json');
     const budgetConfig = readConfigFile('config/budget.yaml');
@@ -88,22 +113,21 @@ app.get('/api/status', (req, res) => {
 });
 
 // 2. Read / Write Config Files
-app.get('/api/config/:name', (req, res) => {
+apiRouter.get('/config/:name', (req, res) => {
   try {
     const name = req.params.name;
     const allowed = ['gates.yaml', 'film_qc.yaml', 'budget.yaml', 'retention.yaml'];
     if (!allowed.includes(name)) {
       return res.status(400).json({ error: 'Config file not permitted' });
     }
-    const rawContent = fs.readFileSync(path.resolve(process.cwd(), 'config', name), 'utf-8');
-    const parsed = yaml.parse(rawContent);
-    res.json({ raw: rawContent, parsed });
+    const parsed = readConfigFile(`config/${name}`);
+    res.json({ raw: parsed ? yaml.stringify(parsed) : '', parsed });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.post('/api/config/:name', (req, res) => {
+apiRouter.post('/config/:name', (req, res) => {
   try {
     const name = req.params.name;
     const { content, signature_token } = req.body;
@@ -111,8 +135,7 @@ app.post('/api/config/:name', (req, res) => {
     if (!signature_token) {
       return res.status(403).json({ error: 'CRITICAL RULE VIOLATION: Mọi thay đổi giới hạn/ngưỡng trong /config/ bắt buộc phải có chữ ký Người phê duyệt!' });
     }
-    const targetPath = path.resolve(process.cwd(), 'config', name);
-    fs.writeFileSync(targetPath, content, 'utf-8');
+    writeConfigFile(`config/${name}`, content, true);
     res.json({ success: true, message: `Tệp ${name} đã được cập nhật với chữ ký ${signature_token}` });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
@@ -120,7 +143,7 @@ app.post('/api/config/:name', (req, res) => {
 });
 
 // 3. Agent Registry
-app.get('/api/agents', (req, res) => {
+apiRouter.get('/agents', (req, res) => {
   try {
     const agents = readConfigFile('agents/registry.json');
     res.json(agents || []);
@@ -130,7 +153,7 @@ app.get('/api/agents', (req, res) => {
 });
 
 // 4. Active Contract
-app.get('/api/contracts', (req, res) => {
+apiRouter.get('/contracts', (req, res) => {
   try {
     const contract = readConfigFile('contracts/active_contract.json');
     res.json(contract);
@@ -140,7 +163,7 @@ app.get('/api/contracts', (req, res) => {
 });
 
 // 5. Tasks Graph
-app.get('/api/tasks', (req, res) => {
+apiRouter.get('/tasks', (req, res) => {
   try {
     const tasks = readConfigFile('tasks/task_graph.json');
     res.json(tasks);
@@ -150,7 +173,7 @@ app.get('/api/tasks', (req, res) => {
 });
 
 // 6. Evidence Store & Cryptographic Hash Chain
-app.get('/api/evidence', (req, res) => {
+apiRouter.get('/evidence', (req, res) => {
   try {
     const store = readConfigFile('evidence/evidence_store.json');
     const chainLog = fs.existsSync(path.resolve(process.cwd(), 'evidence/chain.log'))
@@ -163,7 +186,7 @@ app.get('/api/evidence', (req, res) => {
 });
 
 // 7. Film Hierarchy & Film Bible
-app.get('/api/film', (req, res) => {
+apiRouter.get('/film', (req, res) => {
   try {
     const bible = readConfigFile('film/film_bible.json');
     const hierarchy = readConfigFile('film/acts_scenes_shots.json');
@@ -174,7 +197,7 @@ app.get('/api/film', (req, res) => {
 });
 
 // 8. Human Gates
-app.get('/api/human/gates', (req, res) => {
+apiRouter.get('/human/gates', (req, res) => {
   try {
     const gates = readConfigFile('human/approvals.json');
     res.json(gates || []);
@@ -183,7 +206,7 @@ app.get('/api/human/gates', (req, res) => {
   }
 });
 
-app.post('/api/human/gates/:id/sign', (req, res) => {
+apiRouter.post('/human/gates/:id/sign', (req, res) => {
   try {
     const gateId = req.params.id;
     const { signer_name, signature_token, notes } = req.body;
@@ -198,7 +221,7 @@ app.post('/api/human/gates/:id/sign', (req, res) => {
     gate.timestamp = new Date().toISOString();
     if (notes) gate.notes = notes;
 
-    fs.writeFileSync(path.resolve(process.cwd(), 'human/approvals.json'), JSON.stringify(gates, null, 2));
+    writeConfigFile('human/approvals.json', gates);
 
     // Also append to audit log
     const audit = readConfigFile('audit/audit_log.json') || [];
@@ -209,7 +232,7 @@ app.post('/api/human/gates/:id/sign', (req, res) => {
       action: 'HUMAN_GATE_SIGNED',
       details: `Ký duyệt cổng ${gate.title} (${gate.type}) với mã ${gate.signature_token}`
     });
-    fs.writeFileSync(path.resolve(process.cwd(), 'audit/audit_log.json'), JSON.stringify(audit, null, 2));
+    writeConfigFile('audit/audit_log.json', audit);
 
     res.json({ success: true, gate });
   } catch (err: any) {
@@ -218,7 +241,7 @@ app.post('/api/human/gates/:id/sign', (req, res) => {
 });
 
 // 9. Audit Log
-app.get('/api/audit', (req, res) => {
+apiRouter.get('/audit', (req, res) => {
   try {
     const audit = readConfigFile('audit/audit_log.json');
     res.json(audit || []);
@@ -228,11 +251,10 @@ app.get('/api/audit', (req, res) => {
 });
 
 // 10. Generate Milestone Report
-app.get('/api/milestones/m0/report', (req, res) => {
+apiRouter.get('/milestones/m0/report', (req, res) => {
   try {
     const contract = readConfigFile('contracts/active_contract.json');
     const evidence = readConfigFile('evidence/evidence_store.json') || [];
-    const tasks = readConfigFile('tasks/task_graph.json');
     const gates = readConfigFile('human/approvals.json') || [];
 
     const report = {
@@ -290,7 +312,7 @@ app.get('/api/milestones/m0/report', (req, res) => {
 });
 
 // 11. Real Gemini AI Orchestrator
-app.post('/api/gemini/orchestrate', async (req, res) => {
+apiRouter.post('/gemini/orchestrate', async (req, res) => {
   try {
     const { prompt, mode } = req.body;
     if (!aiClient) {
@@ -326,6 +348,10 @@ app.post('/api/gemini/orchestrate', async (req, res) => {
   }
 });
 
+// Mount router on both /api (for local dev/express) and / (for Vercel serverless /api rewrites)
+app.use('/api', apiRouter);
+app.use('/', apiRouter);
+
 // ----------------------------------------------------
 // VITE MIDDLEWARE SETUP & EXPORT FOR VERCEL
 // ----------------------------------------------------
@@ -333,6 +359,7 @@ export default app;
 
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true, host: '0.0.0.0', port: PORT },
       appType: 'spa',
